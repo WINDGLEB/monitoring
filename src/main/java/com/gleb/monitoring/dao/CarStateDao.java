@@ -12,10 +12,14 @@ public interface CarStateDao extends MongoRepository<CarState, String> {
     @Override
     <T extends CarState> T insert(T carState);
 
+    List<CarState> findAll();
+
     List<CarState> findAllByLicensePlate(String licensePlate);
 
     List<CarState> findAllByTimestamp(Instant time);
 
     CarState findFirstByLicensePlateOrderByTimestampDesc(String licensePlate);
+
+    void deleteByLicensePlate(String licensePlate);
 
 }

@@ -42,6 +42,14 @@ public class CarStateServiceImpl implements CarStateService {
         return carStateDao.findAllByLicensePlate(licensePlate);
     }
 
+    @Override
+    public void deletePreviousCarState(CarState carState) {
+        String licensePlate = carState.getLicensePlate();
+        CarState previousState = carStateDao.findFirstByLicensePlateOrderByTimestampDesc(licensePlate);
+        if (previousState != null){
+            carStateDao.deleteByLicensePlate(licensePlate);
+        }
+    }
 
     private Status checkDifference(CarState current, CarState previous) {
         double fuelAmountCurentState = current.getFuelAmount();

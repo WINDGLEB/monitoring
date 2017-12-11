@@ -1,6 +1,7 @@
 package com.gleb.monitoring.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vaadin.tapio.googlemaps.client.LatLon;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,7 +18,7 @@ public class CarState {
 
     private double fuelAmount;
 
-    private GeographicalCoordinates geolocation;
+    private LatLon geolocation;
 
     @JsonIgnore
     private Status stateStatus;
