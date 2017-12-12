@@ -18,7 +18,7 @@ public class CarState {
 
     private double fuelAmount;
 
-    private LatLon geolocation;
+    private GeographicalCoordinates geolocation;
 
     @JsonIgnore
     private Status stateStatus;

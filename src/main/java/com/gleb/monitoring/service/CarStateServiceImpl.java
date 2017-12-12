@@ -54,7 +54,6 @@ public class CarStateServiceImpl implements CarStateService {
     private Status checkDifference(CarState current, CarState previous) {
         double fuelAmountCurentState = current.getFuelAmount();
         double fuelAmountPreviosState = previous.getFuelAmount();
-        if (previous == null){return Status.OK;}
         if (fuelAmountPreviosState - fuelAmountCurentState > 4) {
             return Status.FUEL_DISCHARGE;
         }
