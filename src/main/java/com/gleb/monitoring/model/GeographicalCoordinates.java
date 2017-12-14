@@ -8,6 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GeographicalCoordinates extends LatLon {
 
+
     @Override
     public String toString() {
         return  getLat() +

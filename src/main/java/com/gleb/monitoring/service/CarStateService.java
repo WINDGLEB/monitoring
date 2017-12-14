@@ -19,4 +19,8 @@ public interface CarStateService {
     List<CarState> findAllByLicensePlate(String licensePlate);
 
     void deletePreviousCarState(CarState carState);
+
+    List<CarState> findLatestCarState();
+
+
 }

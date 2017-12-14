@@ -2,6 +2,7 @@ package com.gleb.monitoring.facade;
 
 import com.gleb.monitoring.dao.CarStateDao;
 import com.gleb.monitoring.model.CarState;
+import com.gleb.monitoring.service.CarStateService;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 
@@ -36,15 +37,15 @@ public class Facade extends UI {
     private static final String MAP_API_KEY = "AIzaSyAD2-p2YRYAtw3hlH44e8JGXQDdqxG0d1k";
     private static final String MAP_LANGUAGE = "english";
 
-    private final CarStateDao carStateDao;
+    private final CarStateService carStateService;
     private final Grid<CarState> grid;
     private final GoogleMap googleMap;
     private ListDataProvider<CarState> dataProvider;
     private final TextField filterTextField;
 
     @Autowired
-    public Facade(CarStateDao carStateDao) {
-        this.carStateDao = carStateDao;
+    public Facade(CarStateService carStateService) {
+        this.carStateService = carStateService;
         this.googleMap = new GoogleMap(MAP_API_KEY, null, MAP_LANGUAGE);
         this.grid = new Grid<>(CarState.class);
         this.filterTextField = new TextField();
@@ -54,7 +55,7 @@ public class Facade extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout mainComponent = new VerticalLayout();
         mainComponent.addComponent(new Label("TRUCK MANAGER"));
-        mainComponent.addComponent(filterTextField);
+        //mainComponent.addComponent(filterTextField);
 
         HorizontalLayout infoComponent = new HorizontalLayout();
         infoComponent.setSizeFull();
@@ -62,7 +63,7 @@ public class Facade extends UI {
         addStatesToGrid();
         infoComponent.addComponents(grid);
 
-        googleMap.setCenter(new LatLon(3.0322715, 41.3214086));
+        googleMap.setCenter(new LatLon(59.932393, 30.3596189));
         configureMap();
         addMarkersToMap();
         infoComponent.addComponent(googleMap);
@@ -89,7 +90,7 @@ public class Facade extends UI {
 
     private List<GoogleMapMarker> generateMarkers() {
         ArrayList<GoogleMapMarker> markers = new ArrayList<>();
-        List<CarState> states = carStateDao.findAll();
+        List<CarState> states = carStateService.findLatestCarState();
         for (CarState state : states) {
             GoogleMapMarker marker = new GoogleMapMarker(state.getLicensePlate(), state.getGeolocation(), false, ICON_URI);
             marker.setAnimationEnabled(false);
@@ -109,7 +110,7 @@ public class Facade extends UI {
     private DataProvider<CarState, ?> filterCollection() {
         filterTextField.setCaption("Filter by license plate:");
         filterTextField.setPlaceholder("license plate");
-        dataProvider = ofCollection(carStateDao.findAll());
+        dataProvider = ofCollection(carStateService.findLatestCarState());
         filterTextField.addValueChangeListener(event -> {
             dataProvider.setFilter(CarState::getLicensePlate, lp -> {
                 String lpLower = lp == null ? ""

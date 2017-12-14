@@ -23,7 +23,7 @@ public class CarStateEndpoint {
     public CarState updateCarState(@RequestBody CarState carState) {
         Status status = carStateService.provideStatus(carState);
         carState.setStateStatus(status);
-        carStateService.deletePreviousCarState(carState);
+        //carStateService.deletePreviousCarState(carState);
         carStateService.addNewCarState(carState);
         return carState;
     }
