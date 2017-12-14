@@ -16,14 +16,10 @@ public interface CarStateDao extends MongoRepository<CarState, String> {
 
     List<CarState> findAllByLicensePlate(String licensePlate);
 
-    List<CarState> findAllByTimestamp(Instant time);
-
     void deleteByLicensePlate(String licensePlate);
 
     CarState findFirstByLicensePlateOrderByTimestampDesc(String licensePlate);
 
     List<CarState> findAllByOrderByTimestampDesc();
-
-
 
 }

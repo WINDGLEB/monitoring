@@ -1,6 +1,5 @@
 package com.gleb.monitoring.facade;
 
-import com.gleb.monitoring.dao.CarStateDao;
 import com.gleb.monitoring.model.CarState;
 import com.gleb.monitoring.service.CarStateService;
 import com.vaadin.annotations.Push;
@@ -10,7 +9,6 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.VaadinRequest;
-
 
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.tapio.googlemaps.GoogleMap;
@@ -24,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.vaadin.data.provider.DataProvider.ofCollection;
-import static java.lang.Thread.sleep;
-
 
 @SpringUI
 @Push
@@ -54,8 +50,7 @@ public class Facade extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout mainComponent = new VerticalLayout();
-        mainComponent.addComponent(new Label("TRUCK MANAGER"));
-        //mainComponent.addComponent(filterTextField);
+        mainComponent.addComponent(new Label("MONITORING OF TRUCKS"));
 
         HorizontalLayout infoComponent = new HorizontalLayout();
         infoComponent.setSizeFull();
@@ -104,7 +99,7 @@ public class Facade extends UI {
     }
 
     private void addStatesToGrid() {
-        grid.setDataProvider(filterCollection());
+        grid.setDataProvider(ofCollection(carStateService.findLatestCarState()));
     }
 
     private DataProvider<CarState, ?> filterCollection() {

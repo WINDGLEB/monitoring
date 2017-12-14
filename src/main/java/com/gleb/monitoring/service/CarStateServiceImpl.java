@@ -68,7 +68,7 @@ public class CarStateServiceImpl implements CarStateService {
         return new ArrayList<>(filterCarState.values());
     }
 
-    public Status checkDifference(CarState current, CarState previous) {
+    private Status checkDifference(CarState current, CarState previous) {
         double fuelAmountCurrentState = current.getFuelAmount();
         double fuelAmountPreviousState = previous.getFuelAmount();
         if (fuelAmountPreviousState - fuelAmountCurrentState > 4) {
